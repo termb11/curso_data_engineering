@@ -11,9 +11,9 @@ sources:
       schema: false
       identifier: false
 
-    freshness:
-      warn_after: {count: 24, period: hour}
-      error_after: {count: 48, period: hour}
+    #freshness:
+    #  warn_after: {count: 24, period: hour}
+    #  error_after: {count: 48, period: hour}
 
     tables:
 
@@ -27,7 +27,7 @@ sources:
           - name: state
           - name: _fivetran_deleted
           - name: _fivetran_synced
-    - name: events
+      - name: events
         loaded_at_field: _fivetran_synced
         columns:
           - name: event_id
@@ -40,7 +40,7 @@ sources:
           - name: order_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
-    - name: orders
+      - name: orders
         loaded_at_field: _fivetran_synced
         columns:
           - name: order_id
@@ -57,3 +57,46 @@ sources:
           - name: STATUS
           - name: _fivetran_deleted
           - name: _fivetran_synced
+      - name: order_items
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: order_id
+          - name: PRODUCT_ID
+          - name: QUANTITY
+          - name: _FIVETRAN_DELETED
+          - name: _FIVETRAN_SYNCED
+      - name: products
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: PRODUCT_ID
+          - name: PRICE
+          - name: NAME
+          - name: INVENTORY
+          - name: _FIVETRAN_DELETED
+          - name: _FIVETRAN_SYNCED
+      - name: promos
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: PROMO_ID
+          - name: DISCOUNT
+          - name: STATUS
+          - name: _FIVETRAN_DELETED
+          - name: _FIVETRAN_SYNCED
+      - name: users
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: USER_ID
+          - name: UPDATED_AT
+          - name: ADDRESS_ID
+          - name: LAST_NAME
+          - name: CREATED_AT
+          - name: PHONE_NUMBER
+          - name: TOTAL_ORDERS
+          - name: FIRST_NAME
+          - name: EMAIL
+          - name: _FIVETRAN_DELETED
+          - name: _FIVETRAN_SYNCED
+
+        
+        
+
