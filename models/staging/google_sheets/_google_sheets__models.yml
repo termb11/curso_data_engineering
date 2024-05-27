@@ -11,7 +11,7 @@ models:
       - name: quantity
         tests:
           - not_null
-        data_type: text
+        data_type: number
         constraints:
           - type: not_null
       - name: month
