@@ -21,6 +21,7 @@ renamed_casted AS (
          , TOTAL_ORDERS
          , FIRST_NAME
          , EMAIL
+         ,coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address
          , _FIVETRAN_DELETED
          , _FIVETRAN_SYNCED
     FROM src_users

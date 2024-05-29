@@ -16,6 +16,7 @@ renamed_casted AS (
         , shipping_service
         , shipping_cost
         , address_id
+        , created_at
         , promo_id
         , ESTIMATED_DELIVERY_AT
         , ORDER_COST
