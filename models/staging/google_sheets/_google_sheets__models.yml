@@ -11,6 +11,7 @@ models:
       - name: quantity
         tests:
           - not_null
+          - positive_values
         data_type: number
         constraints:
           - type: not_null
