@@ -11,14 +11,13 @@ WITH src_addresses AS (
     ),
 
 renamed_casted AS (
-    SELECT
-        address_id
-        , zipcode
-        , country
-        , address
-        , state
-        , _fivetran_deleted
-        , _fivetran_synced AS date_load
+    SELECT address_id,
+    zipcode,
+    country,
+    address,
+    state,
+    coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted,
+    CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_UTC
     FROM src_addresses
     )
 

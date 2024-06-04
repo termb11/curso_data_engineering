@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
-
 WITH src_promos AS (
     SELECT * 
     FROM {{ source('sql_server', 'promos') }}
@@ -12,6 +6,7 @@ WITH src_promos AS (
 renamed_casted AS (
     SELECT promo_id as promo_name,
     MD5(promo_id) as promo_id,
+    status,
     discount as discount_euros,
     case when status='active' then 1
         else 0
@@ -24,10 +19,11 @@ renamed_casted AS (
     union all
     select 'unknown',
     md5('unknown'),
+    'active',
     0,
     1,
     false,
-    current_date,
+    CONVERT_TIMEZONE('UTC',current_date),
     )
 
 SELECT * FROM renamed_casted
