@@ -10,13 +10,12 @@ WITH src_products AS (
     ),
 
 renamed_casted AS (
-    SELECT
-         PRODUCT_ID
-        , PRICE
-        , NAME
-        , INVENTORY
-        , _FIVETRAN_DELETED
-        , _FIVETRAN_SYNCED
+    SELECT PRODUCT_ID,
+    PRICE,
+    NAME,
+    INVENTORY,
+    coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted,
+    CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_UTC
     FROM src_products
     )
 

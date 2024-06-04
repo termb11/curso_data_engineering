@@ -21,7 +21,7 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: _row
-          - name: product_id
           - name: quantity
           - name: month
+          - name: product_id
           - name: _fivetran_synced

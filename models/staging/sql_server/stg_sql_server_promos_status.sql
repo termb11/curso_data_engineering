@@ -1,10 +1,11 @@
 WITH src_promos_status AS (
     SELECT * 
-    FROM {{ source('sql_server', 'promos') }}
+    FROM {{ ref('base_sql_server_promos') }}
     ),
 
 renamed_casted AS (
-    SELECT *
+    SELECT distinct status,
+    status_id
     FROM src_promos_status
     )
 
