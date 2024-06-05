@@ -18,7 +18,7 @@ orders as (
 )
 
 select  o.*,
-        u.price,
+        u.price as price_product,
         ord.order_total,
         ord.order_cost,
         ord.shipping_cost,
