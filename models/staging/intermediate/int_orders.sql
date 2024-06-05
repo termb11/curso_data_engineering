@@ -23,7 +23,7 @@ select  o.*,
         ord.order_cost,
         ord.shipping_cost,
         o.quantity*u.price as price_per_cuantity,
-        sum(o.quantity*u.price)over(partition by ord.order_id) as price_per_oder
+        sum(o.quantity*u.price)over(partition by ord.order_id) as price_per_order
 from products u
 left join src_items_orders o 
 on o.product_id = u.product_id
