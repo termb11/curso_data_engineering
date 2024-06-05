@@ -20,20 +20,18 @@ renamed_casted AS (
          else md5(promo_id)
     end as promo_id,
     CONVERT_TIMEZONE('UTC',estimated_delivery_at) AS estimated_delivery_at_UTC,
-    order_cost,
+    order_cost as order_cost_dollars,
     user_id,
-    order_total,
+    order_total as order_total_dollars,
     CONVERT_TIMEZONE('UTC',delivered_at) AS delivery_at_UTC,
-    tracking_id,
+    nullif(tracking_id, '') as tracking_id,
     status,
     case when status='delivered' then md5('delivered')
          when status='preparing' then md5('preparing')
          when status='shipped' then md5('shipped')
          else status
     end as status_id,
-    case when _fivetran_deleted is null then false
-         else _fivetran_deleted
-    end as _fivetran_deleted,
+    coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted,
     CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_UTC
     FROM src_orders
     )

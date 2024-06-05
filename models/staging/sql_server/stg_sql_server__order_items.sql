@@ -14,8 +14,9 @@ renamed_casted AS (
         order_id
         , PRODUCT_ID
         , QUANTITY
-        , _fivetran_deleted
-        , _fivetran_synced AS date_load
+        , coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted
+        , SUM(quantity)OVER(PARTITION BY order_id) as products_per_order
+        , CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_UTC
     FROM src_order_items
     )
 
