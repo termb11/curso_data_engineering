@@ -7,22 +7,11 @@
 
 WITH src_users AS (
     SELECT * 
-    FROM {{ source('sql_server', 'users') }}
+    FROM {{ ref('base_sql_server_users') }}
     ),
 
 renamed_casted AS (
-    SELECT
-        USER_ID
-         , UPDATED_AT
-         , ADDRESS_ID
-         , LAST_NAME
-         , CREATED_AT
-         , PHONE_NUMBER
-         , TOTAL_ORDERS
-         , FIRST_NAME
-         , EMAIL
-         , _FIVETRAN_DELETED
-         , _FIVETRAN_SYNCED
+    SELECT *
     FROM src_users
     )
 

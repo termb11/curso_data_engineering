@@ -4,8 +4,8 @@ WITH src_event_type AS (
     ),
 
 renamed_casted AS (
-    SELECT distinct event_type,
-    event_type_id
+    SELECT distinct event_type_id,
+    event_type
     FROM src_event_type
     )
 

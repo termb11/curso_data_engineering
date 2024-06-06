@@ -4,8 +4,8 @@ WITH src_shipping AS (
     ),
 
 renamed_casted AS (
-    SELECT distinct shipping_service,
-    shipping_service_id
+    SELECT distinct shipping_service_id,
+    shipping_service
     FROM src_shipping
     )
 
