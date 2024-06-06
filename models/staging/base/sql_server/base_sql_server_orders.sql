@@ -19,11 +19,11 @@ renamed_casted AS (
     case when promo_id='' then md5('unknown')
          else md5(promo_id)
     end as promo_id,
-    CONVERT_TIMEZONE('UTC',estimated_delivery_at) AS estimated_delivery_at_UTC,
+    CONVERT_TIMEZONE('UTC',estimated_delivery_at)::date AS estimated_delivery_at,
     order_cost as order_cost_dollars,
     user_id,
     order_total as order_total_dollars,
-    CONVERT_TIMEZONE('UTC',delivered_at) AS delivery_at_UTC,
+    CONVERT_TIMEZONE('UTC',delivered_at)::date AS delivery_at,
     nullif(tracking_id, '') as tracking_id,
     status,
     case when status='delivered' then md5('delivered')

@@ -23,8 +23,7 @@ products as (
 orders as (
     SELECT order_id,
     promo_id,
-    order_total,
-    order_cost,
+    order_cost_dollars,
     shipping_cost, 
     user_id,
     address_id
