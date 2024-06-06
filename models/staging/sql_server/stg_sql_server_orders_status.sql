@@ -4,8 +4,8 @@ WITH src_orders AS (
     ),
 
 renamed_casted AS (
-    SELECT distinct status,
-    status_id
+    SELECT distinct status_id,
+    status
     FROM src_orders
     )
 

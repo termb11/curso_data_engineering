@@ -1,18 +1,11 @@
 with
         stg_users as (
-        select * from {{ ref("base_sql_server_users") }} 
-    ),
-
-    renamed_casted as (
-        select distinct
-            user_id,
-            first_name,
-            last_name,
-            email,
-            phone_number,
-            total_orders
-        from stg_users
+        select * from {{ ref("stg_sql_server__users") }} 
     )
 
-select *
-from renamed_casted
+select user_id,
+last_name,
+FIRST_NAME,
+EMAIL,
+TOTAL_ORDERS 
+from stg_users
