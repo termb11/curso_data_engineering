@@ -28,13 +28,13 @@ orders as (
     shipping_cost, 
     user_id,
     address_id
-    FROM {{ ref('base_sql_server_orders') }}
+    FROM {{ ref('stg_sql_server__orders') }}
 ),
 
 promos as (
     SELECT promo_id,
     discount_euros
-    FROM {{ ref('base_sql_server_promos') }}
+    FROM {{ ref('stg_sql_server__promos') }}
 )
 
 SELECT  
@@ -50,7 +50,7 @@ SELECT
         sum(oi.quantity*p.price)over(partition by oi.order_id) as price_per_order,
         prom.discount_euros/soi.item_per_order as discount_per_item,
         prom.promo_id,
-        (oi.quantity*p.price)-(prom.discount_euros/soi.item_per_order)+(o.shipping_cost/soi.item_per_order) as total_per_product
+        (oi.quantity*p.price)-(prom.discount_euros/soi.item_per_order)+(o.shipping_cost/soi.item_per_order) as total_per_product_per_order
 FROM 
     order_items oi
 LEFT JOIN 

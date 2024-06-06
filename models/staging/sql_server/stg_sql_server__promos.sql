@@ -1,22 +1,12 @@
 
-{{
-  config(
-    materialized='view'
-  )
-}}
 
 WITH src_promos AS (
     SELECT * 
-    FROM {{ source('sql_server', 'promos') }}
+    FROM {{ ref('base_sql_server_promos') }}
     ),
 
 renamed_casted AS (
-    SELECT
-        PROMO_ID
-        , DISCOUNT
-        , STATUS
-        , _FIVETRAN_DELETED
-        , _FIVETRAN_SYNCED
+    SELECT *
     FROM src_promos
     )
 
