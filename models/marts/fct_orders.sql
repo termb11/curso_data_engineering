@@ -13,7 +13,7 @@ SELECT
         PRICE_PRODUCT,
         SHIPPING_PER_ITEM,
         DISCOUNT_PER_ITEM,
-        TOTAL_PER_PRODUCT
+        TOTAL_PER_PRODUCT_PER_ORDER
 
        FROM int_orders
 )
