@@ -9,19 +9,24 @@ models:
         tests:
           - not_null
           - unique
+        data_type: number
       - name: product_id         
         tests:
           - not_null
+          - unique
           - relationships:
                 to: ref('stg_sql_server_dbo__products')
                 field: product_id  
+        data_type: text
       - name: quantity
         tests:
           - not_null
           - positive_values    
+        data_type: number
       - name: month
         tests:
           - not_null
-      - name: date_load
+        data_type: date
+      - name: _fivetran_synced
         tests:
           - not_null

@@ -4,72 +4,266 @@ models:
   - name: stg_sql_server__addresses
     columns:
       - name: address_id
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each unique address.
       - name: zipcode
+        data_type: number
+        description: >
+          Zipcode of each address.
       - name: country
+        data_type: text
+        description: >
+          Country of each address.
       - name: address
+        data_type: text
+        description: >
+          Description of address_id.
       - name: state
+        data_type: text
+        description: >
+          State of each address.
       - name: _fivetran_deleted
-      - name: DATE_LOAD
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__events
     columns:
       - name: event_id
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each unique event.
       - name: page_url
+        data_type: text
+        description: >
+          Url associated to a event in the website of the platform.
       - name: event_type
+        data_type: text
+        description: >
+          Types of events.
       - name: user_id
+        data_type: text
+        description: >
+          ID for each user on platform.
       - name: product_id
+        data_type: text
+        description: >
+          ID for each product on platform.
       - name: session_id
+        data_type: text
+        description: >
+          ID for each session on platform.
       - name: created_at
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date of creation.
       - name: order_id
+        data_type: text
+        description: >
+          ID for each order on platform.
       - name: _fivetran_deleted
-      - name: DATE_LOAD
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__orders
     columns:
       - name: order_id
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each unique order.
       - name: shipping_service
+        data_type: text
+        description: >
+          name of the shipping service.
       - name: shipping_cost
+        data_type: float
+        description: >
+          Cost of the shipping service.
       - name: address_id
+        data_type: text
+        description: >
+          ID for each unique address.
       - name: promo_id
+        data_type: text
+        description: >
+          ID for each unique promo.
       - name: ESTIMATED_DELIVERY_AT
+        data_type: TIMESTAMP_TZ
+        description: >
+          Estimated product delivery date.
       - name: ORDER_COST
+        data_type: text
+        description: >
+          Cost of each order.
       - name: USER_ID
+        data_type: text
+        description: >
+          ID for each unique user.
       - name: ORDER_TOTAL
+        data_type: text
+        description: >
+          Total cost of the order.
       - name: DELIVERED_AT
+        data_type: TIMESTAMP_TZ
+        description: >
+          Product delivery date.
       - name: TRACKING_ID
+        data_type: text
+        description: >
+          ID for track each order.
       - name: STATUS
+        data_type: text
+        description: >
+          Status os each order.
       - name: _fivetran_deleted
-      - name: DATE_LOAD
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__order_items
     columns:
       - name: order_id
+        data_type: text
+        description: >
+          ID for each unique order.
       - name: PRODUCT_ID
+        data_type: text
+        description: >
+          ID for each unique product.
       - name: QUANTITY
-      - name: _FIVETRAN_DELETED
-      - name: DATE_LOAD
+        data_type: text
+        description: >
+          Quantity of a product in a certain order.
+      - name: _fivetran_deleted
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__promos
     columns:
       - name: PROMO_ID
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each unique promo.
       - name: DISCOUNT
+        data_type: number
+        description: >
+          Discount applicable.
       - name: STATUS
-      - name: _FIVETRAN_DELETED
-      - name: _FIVETRAN_SYNCED
+        data_type: number
+        description: >
+          Status of the promo.
+      - name: _fivetran_deleted
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__products
+    description: >
+      Data about all products
     columns:
-      - name: PRODUCT_ID
-      - name: PRICE
-      - name: NAME
-      - name: INVENTORY
-      - name: _FIVETRAN_DELETED
-      - name: _FIVETRAN_SYNCED
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each unique product on platform.
+      - name: name
+        data_type: text                      
+        description: >
+          Name of the product.
+      - name: price
+        data_type: float
+        description: >
+          Price of the product.
+      - name: inventory
+        data_type: NUMBER                      
+        description: >
+          Amount of the inventory we have for this product.
+      - name: _fivetran_deleted
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
   - name: stg_sql_server__users
     columns:
       - name: USER_ID
+        tests:
+          - not_null
+          - unique
+        data_type: text
+        description: >
+          ID for each user on platform.
       - name: UPDATED_AT
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date of updated.
       - name: ADDRESS_ID
+        data_type: text
+        description: >
+          ID for each unique address.
       - name: LAST_NAME
+        data_type: text
+        description: >
+          Last name of each user.
       - name: CREATED_AT
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date of creation.
       - name: PHONE_NUMBER
+        data_type: text
+        description: >
+          Phone number of each user.
       - name: TOTAL_ORDERS
+        data_type: number
+        description: >
+          Total orders of each users.
       - name: FIRST_NAME
+        data_type: text
+        description: >
+          First name of each user.
       - name: EMAIL
-      - name: _FIVETRAN_DELETED
-      - name: _FIVETRAN_SYNCED
+        data_type: text
+        description: >
+          Email of each user.
+      - name: _fivetran_deleted
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was deleted.
+      - name: _fivetran_synced
+        data_type: TIMESTAMP_TZ
+        description: >
+          Date that the data was loaded.
