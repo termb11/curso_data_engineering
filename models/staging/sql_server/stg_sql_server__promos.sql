@@ -6,7 +6,12 @@ WITH src_promos AS (
     ),
 
 renamed_casted AS (
-    SELECT *
+    SELECT promo_name,
+           promo_id,
+           status_id,
+           discount_usd,
+           _fivetran_deleted,
+           _fivetran_synced_utc
     FROM src_promos
     )
 

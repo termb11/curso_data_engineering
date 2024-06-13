@@ -13,15 +13,23 @@ models:
       - name: zipcode
         description: "Zipcode of each address."
         data_type: number
+        tests:
+          - not_null
       - name: country
         description: "Country of each address."
         data_type: text
+        tests:
+          - not_null
       - name: address
         description: "Description of address_id."
         data_type: text
+        tests:
+          - not_null
       - name: state
         description: "State of each address."
         data_type: text
+        tests:
+          - not_null
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
@@ -41,9 +49,8 @@ models:
       - name: page_url
         description: "Url associated to an event in the website of the platform."
         data_type: text
-      - name: event_type
-        description: "Types of events."
-        data_type: text
+        tests:
+          - not_null
       - name: user_id
         description: "ID for each user on platform."
         data_type: text
@@ -53,16 +60,20 @@ models:
       - name: session_id
         description: "ID for each session on platform."
         data_type: text
+        tests:
+          - not_null
       - name: created_at
         description: "Date of creation."
         data_type: TIMESTAMP_TZ
+        tests:
+          - not_null
       - name: order_id
         description: "ID for each order on platform."
         data_type: text
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -75,43 +86,57 @@ models:
         tests:
           - not_null
           - unique
-      - name: shipping_service
-        description: "Name of the shipping service."
-        data_type: text
-      - name: shipping_cost
+      - name: shipping_cost_usd
         description: "Cost of the shipping service."
         data_type: float
+        tests:
+          - not_null
+          - positive_values
       - name: address_id
         description: "ID for each unique address."
         data_type: text
+        tests:
+          - not_null
       - name: promo_id
         description: "ID for each unique promo."
         data_type: text
+        tests:
+          - not_null
       - name: estimated_delivery_at
         description: "Estimated product delivery date."
         data_type: TIMESTAMP_TZ
-      - name: order_cost
+      - name: created_at
+        description: "created date of the order."
+        data_type: TIMESTAMP_TZ
+      - name: order_cost_usd
         description: "Cost of each order."
         data_type: text
+        tests:
+          - not_null
+          - positive_values
       - name: user_id
         description: "ID for each unique user."
         data_type: text
-      - name: order_total
+        tests:
+          - not_null
+      - name: order_total_usd
         description: "Total cost of the order."
         data_type: text
+        tests:
+          - not_null
+          - positive_values
       - name: delivered_at
         description: "Product delivery date."
         data_type: TIMESTAMP_TZ
-      - name: tracking_id
-        description: "ID for tracking each order."
+      - name: status_id
+        description: "ID for the status of each order."
         data_type: text
-      - name: status
-        description: "Status of each order."
-        data_type: text
+        tests:
+          - not_null
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -121,12 +146,19 @@ models:
       - name: order_id
         description: "ID for each unique order."
         data_type: text
+        tests:
+          - not_null
       - name: product_id
         description: "ID for each unique product."
         data_type: text
+        tests:
+          - not_null
       - name: quantity
         description: "Quantity of a product in a certain order."
         data_type: text
+        tests:
+          - not_null
+          - positive_values
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
@@ -143,9 +175,12 @@ models:
         tests:
           - not_null
           - unique
-      - name: discount
+      - name: discount_usd
         description: "Discount applicable."
         data_type: number
+        tests:
+          - not_null
+          - positive_values
       - name: status
         description: "Status of the promo."
         data_type: number
@@ -165,15 +200,22 @@ models:
         tests:
           - not_null
           - unique
-      - name: name
+      - name: name_product
         description: "Name of the product."
         data_type: text
+        tests:
+          - not_null
       - name: price
         description: "Price of the product."
         data_type: float
+        tests:
+          - not_null
+          - positive_values
       - name: inventory
         description: "Amount of the inventory we have for this product."
         data_type: number
+        tests:
+          - positive_values
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
@@ -193,27 +235,43 @@ models:
       - name: updated_at
         description: "Date of last update."
         data_type: TIMESTAMP_TZ
+        tests:
+          - not_null
       - name: address_id
         description: "ID for each unique address."
         data_type: text
+        tests:
+          - not_null
       - name: last_name
         description: "Last name of each user."
         data_type: text
+        tests:
+          - not_null
       - name: created_at
         description: "Date of creation."
         data_type: TIMESTAMP_TZ
+        tests:
+          - not_null
       - name: phone_number
         description: "Phone number of each user."
         data_type: text
+        tests:
+          - not_null
       - name: total_orders
         description: "Total orders of each user."
         data_type: number
+        tests:
+          - positive_values
       - name: first_name
         description: "First name of each user."
         data_type: text
+        tests:
+          - not_null
       - name: email
         description: "Email of each user."
         data_type: text
+        tests:
+          - not_null
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ

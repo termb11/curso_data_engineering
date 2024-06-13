@@ -11,10 +11,10 @@ users as (
 )
 
 select  u.USER_ID
-         , u.UPDATED_AT
+         , u.UPDATED_AT::date as UPDATED_AT
          , u.ADDRESS_ID
          , u.LAST_NAME
-         , u.CREATED_AT
+         , u.CREATED_AT::date as CREATED_AT
          , u.PHONE_NUMBER
          , coalesce(o.total_order,0) as TOTAL_ORDERS
          , u.FIRST_NAME
