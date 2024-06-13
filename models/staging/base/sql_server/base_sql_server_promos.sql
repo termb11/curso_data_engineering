@@ -7,7 +7,7 @@ renamed_casted AS (
     SELECT promo_id as promo_name,
     MD5(promo_id) as promo_id,
     status,
-    discount as discount_euros,
+    discount as discount_usd,
     case when status='active' then 1
         else 0
     end as status_id
