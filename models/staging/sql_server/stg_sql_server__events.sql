@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized='incremental',
+        unique_key='event_id',
+        tags='incremental'
+    )
+}}
+
 WITH src_events AS (
     SELECT *
     FROM {{ ref('base_sql_server_events') }}
@@ -18,3 +26,10 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
+
+{% if is_incremental() %}
+
+	  WHERE _fivetran_synced > (SELECT MAX(_fivetran_synced) FROM {{ this }} )
+
+{% endif %}
+    

@@ -1,7 +1,9 @@
 {{
-  config(
-    materialized='view'
-  )
+    config(
+        materialized='incremental',
+        unique_key='order_item_id',
+        tags='incremental'
+    )
 }}
 
 WITH src_order_items AS (
@@ -11,7 +13,8 @@ WITH src_order_items AS (
 
 renamed_casted AS (
     SELECT
-        order_id
+        {{dbt_utils.generate_surrogate_key(['order_id', 'product_id'])}} as order_item_id
+        , order_id
         , PRODUCT_ID
         , QUANTITY
         , coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted
@@ -21,3 +24,9 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
+
+{% if is_incremental() %}
+
+	  WHERE _fivetran_synced > (SELECT MAX(_fivetran_synced) FROM {{ this }} )
+
+{% endif %}

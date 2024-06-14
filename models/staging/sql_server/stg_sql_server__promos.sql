@@ -1,4 +1,10 @@
-
+{{
+    config(
+        materialized='incremental',
+        unique_key='promo_id',
+        tags='incremental'
+    )
+}}
 
 WITH src_promos AS (
     SELECT * 
@@ -16,3 +22,9 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
+
+{% if is_incremental() %}
+
+	  WHERE _fivetran_synced > (SELECT MAX(_fivetran_synced) FROM {{ this }} )
+
+{% endif %}

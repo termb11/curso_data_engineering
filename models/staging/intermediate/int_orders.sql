@@ -16,17 +16,13 @@ order_items AS (
 
 products as (
     SELECT price,
-    product_id
+    product_id,
+    category_id
     FROM {{ ref('stg_sql_server__products') }}
 ),
 
 orders as (
-    SELECT order_id,
-    promo_id,
-    order_cost_usd,
-    shipping_cost_usd, 
-    user_id,
-    address_id
+    SELECT *
     FROM {{ ref('stg_sql_server__orders') }}
 ),
 
@@ -39,9 +35,15 @@ promos as (
 SELECT  
         oi.order_id,
         o.user_id,
+        o.shipping_service_id,
+        o.created_at,
+        o.delivery_at,
+        o.estimated_delivery_at,
+        o.delivery_details,
         o.address_id,
         oi.quantity,
         oi.product_id,
+        p.category_id,
         soi.item_per_order,
         p.price AS price_product,
         o.shipping_cost_usd/soi.item_per_order as shipping_per_item,
