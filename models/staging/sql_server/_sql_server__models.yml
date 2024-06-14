@@ -278,3 +278,98 @@ models:
       - name: _fivetran_synced
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
+
+  - name: stg_sql_server__dates
+    description: "Table containing dates."
+    columns:
+      - name: date_id
+        description: "ID for each date."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: DATE_ID
+        tests:
+          - not_null
+      - name: DAY_OF_WEEK
+        tests:
+          - not_null
+      - name: DAY_OF_WEEK_NAME
+        tests:
+          - not_null
+      - name: DAY_OF_MONTH
+        tests:
+          - not_null
+      - name: DAY_OF_YEAR
+        tests:
+          - not_null
+      - name: WEEK_OF_YEAR
+        tests:
+          - not_null
+      - name: MONTH_NAME
+        tests:
+          - not_null
+      - name: MONTH_OF_YEAR
+        tests:
+          - not_null
+      - name: QUARTER_OF_YEAR
+        tests:
+          - not_null
+      - name: YEAR_NUMBER
+        tests:
+          - not_null
+
+  - name: stg_sql_server__events_types
+    description: "Table containing event types."
+    columns:
+      - name: event_type_id
+        description: "ID for each event."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: event_type
+        tests:
+          - not_null
+
+  - name: stg_sql_server__order_status
+    description: "Table containing status of the orders."
+    columns:
+      - name: order_status_id
+        description: "ID for each order status."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: order_status
+        description: "Status of the order"
+        tests:
+          - not_null
+
+  - name: stg_sql_server__promos_status
+    description: "Table containing status of the promos."
+    columns:
+      - name: status_id
+        description: "ID for each promo status."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: status
+        description: "If the promo status is active or inactive"
+        tests:
+          - not_null
+
+  - name: stg_sql_server__shipping
+    description: "Table containing shipping services."
+    columns:
+      - name: shipping_service_id
+        description: "ID for each shipping service."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: shipping_service
+        description: "names of each shipping service."
+        tests:
+          - not_null

@@ -21,6 +21,9 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: address_id
+            tests:
+              - not_null
+              - unique
           - name: zipcode
           - name: country
           - name: address
@@ -31,6 +34,9 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: event_id
+            tests:
+              - not_null
+              - unique
           - name: page_url
           - name: event_type
           - name: user_id
@@ -44,6 +50,9 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: order_id
+            tests:
+              - not_null
+              - unique
           - name: shipping_service
           - name: shipping_cost
           - name: address_id
@@ -61,6 +70,8 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: order_id
+            tests:
+              - not_null
           - name: PRODUCT_ID
           - name: QUANTITY
           - name: _FIVETRAN_DELETED
@@ -69,15 +80,22 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: PRODUCT_ID
+            tests:
+              - not_null
+              - unique
           - name: PRICE
           - name: NAME
           - name: INVENTORY
+          - name: CATEGORY
           - name: _FIVETRAN_DELETED
           - name: _FIVETRAN_SYNCED
       - name: promos
         loaded_at_field: _fivetran_synced
         columns:
           - name: PROMO_ID
+            tests:
+              - not_null
+              - unique
           - name: DISCOUNT
           - name: STATUS
           - name: _FIVETRAN_DELETED
@@ -86,6 +104,9 @@ sources:
         loaded_at_field: _fivetran_synced
         columns:
           - name: USER_ID
+            tests:
+              - not_null
+              - unique
           - name: UPDATED_AT
           - name: ADDRESS_ID
           - name: LAST_NAME
@@ -96,6 +117,16 @@ sources:
           - name: EMAIL
           - name: _FIVETRAN_DELETED
           - name: _FIVETRAN_SYNCED
+      - name: categories
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: category_name
+            tests:
+              - not_null
+          - name: created_at
+            tests:
+              - not_null
+
 
         
         

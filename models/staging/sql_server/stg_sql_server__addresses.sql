@@ -1,8 +1,9 @@
-
 {{
-  config(
-    materialized='view'
-  )
+    config(
+        materialized='incremental',
+        unique_key='address_id',
+        tags='incremental'
+    )
 }}
 
 WITH src_addresses AS (
@@ -22,3 +23,10 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
+
+{% if is_incremental() %}
+
+	  WHERE _fivetran_synced > (SELECT MAX(_fivetran_synced) FROM {{ this }} )
+
+{% endif %}
+    
