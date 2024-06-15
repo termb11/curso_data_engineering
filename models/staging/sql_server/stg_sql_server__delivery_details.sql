@@ -1,5 +1,6 @@
 WITH src_items_orders AS (
-    SELECT delivery_details_id,
+    SELECT distinct delivery_details_id,
     delivery_details
-    FROM {{ ref('stg_sql_server__orders') }}
+    FROM {{ ref('base_sql_server_orders') }}
     )
+select * from src_items_orders

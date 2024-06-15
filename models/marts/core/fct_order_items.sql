@@ -10,8 +10,6 @@ SELECT
         promo_id,
         user_id,
         address_id,
-        order_status_id,
-        shipping_service_id,
         quantity,
         PRICE_PRODUCT,
         SHIPPING_PER_ITEM,

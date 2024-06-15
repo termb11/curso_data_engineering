@@ -8,7 +8,7 @@
 
 WITH src_addresses AS (
     SELECT * 
-    FROM {{ source('sql_server', 'addresses') }}
+    FROM {{ ref('base_sql_server_addresses') }}
     ),
 
 renamed_casted AS (

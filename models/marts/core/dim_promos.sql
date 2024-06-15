@@ -5,6 +5,5 @@ with
 
 select promo_name,
 promo_id,
-status_id,
-discount_euros
+discount_usd
 from stg_promos

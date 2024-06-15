@@ -15,7 +15,7 @@ order_items AS (
 ),
 
 products as (
-    SELECT price,
+    SELECT price_product,
     product_id,
     category_id
     FROM {{ ref('stg_sql_server__products') }}
@@ -35,23 +35,29 @@ promos as (
 SELECT  
         oi.order_id,
         o.user_id,
+        o.shipping_service,
         o.shipping_service_id,
         o.created_at,
-        o.delivery_at,
+        o.days_after,
+        o.status_id,
+        o.status,
+        o.days_before,
+        o.delivered_at,
         o.estimated_delivery_at,
         o.delivery_details,
+        o.delivery_details_id,
         o.address_id,
         oi.quantity,
         oi.product_id,
         p.category_id,
         soi.item_per_order,
-        p.price AS price_product,
+        p.price_product,
         o.shipping_cost_usd/soi.item_per_order as shipping_per_item,
-        oi.quantity*p.price as price_per_quantity,
-        sum(oi.quantity*p.price)over(partition by oi.order_id) as price_per_order,
+        oi.quantity*p.price_product as price_per_quantity,
+        sum(oi.quantity*p.price_product)over(partition by oi.order_id) as price_per_order,
         prom.discount_usd/soi.item_per_order as discount_per_item,
         prom.promo_id,
-        (oi.quantity*p.price)-(prom.discount_usd/soi.item_per_order)+(o.shipping_cost_usd/soi.item_per_order) as total_per_product_per_order
+        (oi.quantity*p.price_product)-(prom.discount_usd/soi.item_per_order)+(o.shipping_cost_usd/soi.item_per_order) as total_per_product_per_order
 FROM 
     order_items oi
 LEFT JOIN 
