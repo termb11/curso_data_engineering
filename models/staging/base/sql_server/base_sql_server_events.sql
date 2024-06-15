@@ -10,12 +10,12 @@ renamed_casted AS (
         , event_type
         , md5(event_type) AS event_type_id
         , user_id
-        , NULLIF(product_id,'') as product_id
+        , product_id
         , session_id
-        , CONVERT_TIMEZONE('UTC',created_at)::date as created_at
-        , NULLIF(order_id, '') as order_id
-        , coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted
-        , CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_UTC
+        , created_at
+        , order_id
+        , _fivetran_deleted
+        , _fivetran_synced
     FROM src_events
     )
 

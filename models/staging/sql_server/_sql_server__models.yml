@@ -73,7 +73,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced_utc
+      - name: _fivetran_synced
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -205,7 +205,7 @@ models:
         data_type: text
         tests:
           - not_null
-      - name: price
+      - name: price_product
         description: "Price of the product."
         data_type: float
         tests:
