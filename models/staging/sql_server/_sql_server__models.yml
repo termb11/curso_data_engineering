@@ -33,7 +33,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -73,7 +73,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -100,6 +100,11 @@ models:
       - name: promo_id
         description: "ID for each unique promo."
         data_type: text
+        tests:
+          - not_null
+      - name: seller_id
+        description: "ID for each unique seller."
+        data_type: number
         tests:
           - not_null
       - name: estimated_delivery_at
@@ -162,7 +167,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -187,7 +192,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -219,7 +224,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -275,7 +280,7 @@ models:
       - name: _fivetran_deleted
         description: "Date that the data was deleted."
         data_type: TIMESTAMP_TZ
-      - name: _fivetran_synced
+      - name: _fivetran_synced_UTC
         description: "Date that the data was loaded."
         data_type: TIMESTAMP_TZ
 
@@ -283,41 +288,57 @@ models:
     description: "Table containing dates."
     columns:
       - name: date_id
-        description: "ID for each date."
-        data_type: text
+        data_type: date
+        description: "Date"
         tests:
           - not_null
           - unique
-      - name: DATE_ID
+      - name: day_of_week
+        data_type: number
+        description: "Number for the day of the week"
         tests:
           - not_null
-      - name: DAY_OF_WEEK
+      - name: day_of_week_name
+        data_type: varchar
+        description: "The day of the week"
         tests:
           - not_null
-      - name: DAY_OF_WEEK_NAME
+      - name: month_of_year
+        data_type: number
+        description: "Month of the year"
         tests:
           - not_null
-      - name: DAY_OF_MONTH
+      - name: year_number
+        data_type: number
+        description: "Year"
         tests:
           - not_null
-      - name: DAY_OF_YEAR
+      - name: week_of_year
+        data_type: number
+        description: "Week number of the year"
         tests:
           - not_null
-      - name: WEEK_OF_YEAR
+      - name: quarter_of_the_year
+        data_type: number
+        description: "Quarter of the year"
         tests:
           - not_null
-      - name: MONTH_NAME
+      - name: day_of_month
+        data_type: number
+        description: "day of the month"
         tests:
           - not_null
-      - name: MONTH_OF_YEAR
+      - name: day_of_year
+        data_type: number
+        description: "day of the year"
         tests:
           - not_null
-      - name: QUARTER_OF_YEAR
+      - name: month_name
+        data_type: varchar
+        description: "name of the month"
         tests:
           - not_null
-      - name: YEAR_NUMBER
-        tests:
-          - not_null
+
 
   - name: stg_sql_server__events_types
     description: "Table containing event types."
@@ -373,3 +394,73 @@ models:
         description: "names of each shipping service."
         tests:
           - not_null
+
+  - name: stg_sql_server__sellers
+    description: "Table containing sellers."
+    columns:
+      - name: seller_id
+        description: "ID for each seller."
+        data_type: number
+        tests:
+          - not_null
+          - unique
+      - name: dni
+        description: "dni of each seller"
+        tests:
+          - not_null
+      - name: last_name
+        description: "Last name of each seller."
+        data_type: text
+        tests:
+          - not_null
+      - name: first_name
+        description: "First name of each seller."
+        data_type: text
+        tests:
+          - not_null
+      - name: email
+        description: "Email of each seller."
+        data_type: text
+        tests:
+          - not_null
+      - name: phone
+        description: "Phone number of each seller."
+        data_type: text
+        tests:
+          - not_null
+      - name: hiring_date
+        description: "date on which the seller was hired"
+        data_type: date
+        tests:
+          - not_null
+      - name: salary_usd
+        description: "salary of each seller"
+        data_type: number
+        tests:
+          - not_null
+      - name: _fivetran_synced
+        description: "Date that the data was loaded."
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_sql_server__categories
+    description: "Table containing categories of products."
+    columns:
+      - name: category_id
+        description: "ID for each category."
+        data_type: text
+        tests:
+          - not_null
+          - unique
+      - name: category_name
+        description: "name of the category"
+        tests:
+          - not_null
+      - name: created_at
+        description: "date of the creation of the category"
+        tests: 
+          - not_null
+      - name: _fivetran_synced
+        description: "Date that the data was loaded."
+        data_type: TIMESTAMP_TZ
+      
+        

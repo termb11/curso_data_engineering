@@ -1,11 +1,3 @@
-{{
-    config(
-        materialized='incremental',
-        unique_key='order_item_id',
-        tags='incremental'
-    )
-}}
-
 WITH src_order_items AS (
     SELECT * 
     FROM {{ source('sql_server', 'order_items') }}
@@ -24,9 +16,3 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
-
-{% if is_incremental() %}
-
-	  WHERE _fivetran_synced > (SELECT MAX(_fivetran_synced) FROM {{ this }} )
-
-{% endif %}

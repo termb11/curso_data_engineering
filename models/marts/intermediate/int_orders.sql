@@ -35,6 +35,7 @@ promos as (
 SELECT  
         oi.order_id,
         o.user_id,
+        o.seller_id,
         o.shipping_service,
         o.shipping_service_id,
         o.created_at,

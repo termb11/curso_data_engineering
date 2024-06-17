@@ -21,7 +21,12 @@ select b.product_id,
        b.month,
        b.expected_quantity_sold,
        IFF(o.month=b.month, o.real_quantity_sold, null) as real_quantity_sold,
-       o.real_quantity_sold-b.expected_quantity_sold as dif_quantity
+       CASE when o.real_quantity_sold>b.expected_quantity_sold then o.real_quantity_sold-b.expected_quantity_sold
+       else 0
+       end as more_product_sold,
+       CASE when o.real_quantity_sold<b.expected_quantity_sold then b.expected_quantity_sold-o.real_quantity_sold
+       else 0
+       end as less_product_sold
 from orders o
 left join budget b
 on o.product_id=b.product_id

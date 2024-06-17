@@ -7,5 +7,8 @@ select user_id,
 last_name,
 FIRST_NAME,
 EMAIL,
+phone_number,
+created_at,
+updated_at,
 TOTAL_ORDERS 
 from stg_users

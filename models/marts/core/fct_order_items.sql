@@ -9,12 +9,12 @@ SELECT
         category_id,
         promo_id,
         user_id,
+        seller_id,
         address_id,
         quantity,
         PRICE_PRODUCT,
         SHIPPING_PER_ITEM,
-        DISCOUNT_PER_ITEM,
-        TOTAL_PER_PRODUCT_PER_ORDER
+        DISCOUNT_PER_ITEM
 
        FROM int_orders
 )

@@ -1,0 +1,477 @@
+version: 2
+
+models:
+
+  - name: dim_date
+    description: "Dimension table of dates"
+    columns:
+      - name: date_id
+        data_type: date
+        description: "Date"
+        tests:
+          - not_null
+          - unique
+      - name: day_of_week
+        data_type: number
+        description: "Number for the day of the week"
+        tests:
+          - not_null
+      - name: day_of_week_name
+        data_type: varchar
+        description: "The day of the week"
+        tests:
+          - not_null
+      - name: month_of_year
+        data_type: number
+        description: "Month of the year"
+        tests:
+          - not_null
+      - name: year_number
+        data_type: number
+        description: "Year"
+        tests:
+          - not_null
+      - name: week_of_year
+        data_type: number
+        description: "Week number of the year"
+        tests:
+          - not_null
+      - name: quarter_of_year
+        data_type: number
+        description: "Quarter of the year"
+        tests:
+          - not_null
+      - name: day_of_month
+        data_type: number
+        description: "day of the month"
+        tests:
+          - not_null
+      - name: day_of_year
+        data_type: number
+        description: "day of the year"
+        tests:
+          - not_null
+      - name: month_name
+        data_type: varchar
+        description: "name of the month"
+        tests:
+          - not_null
+
+  - name: dim_addresses
+    description: "Dimension table of unique addresses for my project"
+    columns:
+      - name: address_id
+        data_type: varchar
+        description: "Unique identifier of an address"
+        tests:
+          - unique
+          - not_null
+      - name: address
+        data_type: varchar
+        description: "Address name"
+        tests:
+          - not_null
+      - name: zipcode
+        data_type: number
+        description: "Address zip code"
+        tests:
+          - not_null
+          - positive_values
+      - name: state
+        data_type: varchar
+        description: "State or community location of our address"
+        tests:
+          - not_null
+      - name: country
+        data_type: varchar
+        description: "Country where our address is located"
+        tests:
+          - not_null
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""
+
+  - name: dim_event_type
+    description: "Dimension table of event types"
+    columns:
+      - name: event_type_id
+        data_type: varchar
+        description: "Unique identifier for an event type"
+        tests:
+          - not_null
+          - unique
+      - name: event_type
+        data_type: varchar
+        description: "Description of the event type"
+        tests:
+          - not_null
+
+  - name: dim_products
+    description: "Dimension table of products that contains all related values"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Unique identifier for a product type"
+        tests:
+          - unique
+      - name: name_product
+        data_type: varchar
+        description: "Product name"
+        tests:
+          - not_null
+      - name: price_product
+        data_type: float
+        description: "Product value"
+        tests:
+          - not_null
+          - positive_values
+      - name: inventory
+        data_type: number
+        description: "Product quantity"
+        tests:
+          - not_null
+          - positive_values
+      
+  - name: dim_promos
+    description: "Dimension table of promotions for an order"
+    columns:
+      - name: promo_id
+        data_type: varchar
+        description: "Unique identifier for a promotion"
+        tests:
+          - unique
+          - not_null
+      - name: promo_name
+        data_type: varchar
+        description: "Promotion name"
+        tests:
+          - not_null
+      - name: discount_usd
+        data_type: number
+        description: "Numeric value of a promotion"
+
+  - name: dim_shipping
+    description: "Dimension table of shipping companies that contains all related values"
+    columns:
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Shipping company identifier"
+        tests:
+          - not_null
+          - unique
+      - name: shipping_service
+        data_type: varchar
+        description: "Description of the shipping company"
+        tests:
+          - not_null
+
+  - name: dim_users
+    description: "Dimension table of users"
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: "Unique identifier of a user"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        data_type: varchar
+        description: "Field containing the user's first name"
+        tests:
+          - not_null
+      - name: last_name
+        data_type: varchar
+        description: "Field containing the user's last name"
+        tests:
+          - not_null
+      - name: email
+        data_type: varchar
+        description: "Field containing the user's email information"
+        tests:
+          - not_null
+      - name: phone_number
+        data_type: varchar
+        description: "Field containing the user's phone number"
+        tests:
+          - not_null
+      - name: created_at
+        data_type: timestamp_tz
+        description: "User's creation date in day-month-year format"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: updated_at
+        data_type: timestamp_tz
+        description: "User's update date in day-month-year format"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: total_orders
+        data_type: number
+        description: "Total orders of each user"
+
+  - name: dim_order_status
+    description: "Dimension table of order status"
+    columns:
+      - name: status_id
+        data_type: varchar
+        description: "Status identifier"
+        tests:
+          - not_null
+          - unique
+      - name: status
+        data_type: varchar
+        description: "Status description"
+
+  - name: fct_events
+    description: "Fact table of events"
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: "Unique identifier of the event"
+        tests:
+          - unique
+          - not_null
+      - name: event_type_id
+        data_type: varchar
+        description: "Event type identifier"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_events_type')
+              field: event_type_id
+      - name: user_id
+        data_type: varchar
+        description: "User who performed the event type"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+      - name: session_id
+        data_type: varchar
+        description: "Session identifier of the event"
+        tests:
+          - not_null
+      - name: page_url
+        data_type: varchar
+        description: "page url associated to the event"
+        tests:
+          - not_null
+      - name: order_id
+        data_type: varchar
+        description: "order identifier of the event"
+      - name: product_id
+        data_type: varchar
+        description: "product identifier of the event"
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: created_at
+        data_type: date
+        description: "date in day-month-year format"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: fct_order_items
+    description: "Fact table of orders"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Order identifier of a specific product"
+        tests:
+          - not_null
+      - name: user_id
+        data_type: varchar
+        description: "Unique identifier of the user who placed this order"
+      - name: address_id
+        data_type: varchar
+        description: "Address identifier for this specific order"
+        tests:
+          - relationships:
+              to: ref('dim_addresses')
+              field: address_id
+      - name: product_id
+        data_type: varchar
+        description: "Unique identifier for a product"
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: category_id
+        data_type: varchar
+        description: "Unique identifier for a category"
+        tests:
+          - relationships:
+              to: ref('dim_categories')
+              field: category_id
+      - name: quantity
+        data_type: number
+        description: "Quantity of a product within a specific order"
+        tests:
+          - not_null
+          - positive_values
+      - name: price_product
+        data_type: float
+        description: "Unit value of the product"
+        tests:
+          - not_null
+          - positive_values
+      - name: shipping_per_item
+        data_type: float
+        description: "Shipping cost for this product keeping in mind its quantity within the order"
+        tests:
+          - not_null
+          - positive_values
+      - name: promo_id
+        data_type: varchar
+        description: "Identifier of the promotion applied to the order"
+        tests:
+          - relationships:
+              to: ref('dim_promos')
+              field: promo_id
+      - name: discount_per_item
+        data_type: float
+        description: "Discount for a product keeping in mind its quantity within the order"
+        tests:
+          - not_null
+          - positive_values
+  
+
+  - name: fct_budget
+    description: "Fact table of budgets"
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: "Unique identifier for product"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: expected_quantity_sold
+        data_type: varchar
+        description: "Quantity of a budget"
+        tests:
+          - positive_values
+      - name: month
+        data_type: number
+        description: "Month of the budget"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: month_of_year
+
+
+  - name: dim_categories
+    description: "Table containing the information of categories"
+    columns:
+      - name: category_id
+        data_type: varchar
+        description: "Unique identifier of the category"
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        data_type: varchar
+        description: "Name of the category"
+        tests:
+          - not_null
+      - name: created_at
+        data_type: date
+        description: "Date on which the category was created"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: dim_delivery_details
+    description: "Table containing the information of deliveries"
+    columns:
+      - name: delivery_details_id
+        data_type: varchar
+        description: "Unique identifier of the delivery details"
+        tests:
+          - unique
+          - not_null
+      - name: delivery_details
+        data_type: varchar
+        description: "Description of the time of the delivery"
+        tests:
+          - not_null
+
+  - name: fct_orders_info
+    description: "Fact table of orders info"
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: "Order identifier of a specific product"
+        tests:
+          - not_null
+      - name: status_id
+        data_type: varchar
+        description: "Unique identifier of the state of the order"
+        tests:
+          - relationships:
+              to: ref('dim_order_status')
+              field: status_id
+      - name: created_at
+        data_type: date
+        description: "Date on which the order was created"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: estimated_delivery_at
+        data_type: date
+        description: "Date on which the package is estimated to be delivered"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: delivered_at
+        data_type: date
+        description: "Date on winch the order was delivered"
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: delivery_details_id
+        data_type: varchar
+        description: "Unique identifier of the details of the delivered"
+        tests:
+          - relationships:
+              to: ref('dim_delivery_details')
+              field: delivery_details_id
+      - name: shipping_service_id
+        data_type: varchar
+        description: "Unique identifier of the shipping service"
+        tests:
+          - relationships:
+              to: ref('dim_shipping')
+              field: shipping_service_id
+      - name: days_before
+        data_type: number
+        description: "number of days before the order has been delivered taking into account the estimated delivery date"
+        tests:
+          - positive_values
+      - name: days_after
+        data_type: number
+        description: "number of days after the order has been delivered taking into account the estimated delivery date"
+        tests:
+          - positive_values
+
+
+
+
+ 

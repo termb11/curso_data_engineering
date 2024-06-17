@@ -1,0 +1,33 @@
+version: 2
+
+models:
+
+  - name: int_orders
+    description: "Intermediate for join orders and order_items"
+    columns:
+      - name: DELIVERED_AT
+      - name: ESTIMATED_DELIVERY_AT
+      - name: DELIVERY_DETAILS
+      - name: DELIVERY_DETAILS_ID
+      - name: ADDRESS_ID
+      - name: QUANTITY
+      - name: PRODUCT_ID
+      - name: CATEGORY_ID
+      - name: ITEM_PER_ORDER
+      - name: PRICE_PRODUCT
+      - name: SHIPPING_PER_ITEM
+      - name: PRICE_PER_QUANTITY
+      - name: PRICE_PER_ORDER
+      - name: DISCOUNT_PER_ITEM
+      - name: PROMO_ID
+      - name: TOTAL_PER_PRODUCT_PER_ORDER
+
+  - name: int_budget
+    description: "Intermediate for compare budget and real sales"
+    columns:
+      - name: PRODUCT_ID
+      - name: MONTH
+      - name: EXPECTED_QUANTITY_SOLD
+      - name: REAL_QUANTITY_SOLD
+      - name: MORE_PRODUCT_SOLD
+      - name: LESS_PRODUCT_SOLD

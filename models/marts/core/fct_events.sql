@@ -9,6 +9,6 @@ event_type_id,
 user_id,
 product_id,
 session_id,
-date_id,
+created_at,
 order_id
 from stg_events
