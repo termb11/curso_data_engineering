@@ -5,6 +5,7 @@ WITH src_orders AS (
 
 renamed_casted AS (
     SELECT order_id,
+    seller_id,
     shipping_service,
     shipping_service_id,
     shipping_cost_usd,

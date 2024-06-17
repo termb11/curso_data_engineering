@@ -9,7 +9,7 @@ renamed_casted AS (
     discount_usd,
     status_id,
     coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted,
-    CONVERT_TIMEZONE('UTC',_FIVETRAN_SYNCED) as _FIVETRAN_SYNCED
+    CONVERT_TIMEZONE('UTC',_FIVETRAN_SYNCED) as _FIVETRAN_SYNCED_UTC
     from src_promos
     union all
     select 'unknown',

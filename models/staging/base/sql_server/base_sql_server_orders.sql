@@ -12,6 +12,7 @@ WITH src_orders AS (
 
 renamed_casted AS (
     SELECT order_id,
+    seller_id,
     COALESCE(NULLIF(shipping_service,''),'unknown') AS shipping_service,
     md5(COALESCE(NULLIF(shipping_service,''),'unknown')) AS shipping_service_id,
     shipping_cost as shipping_cost_usd,

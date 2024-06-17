@@ -4,7 +4,7 @@ with
     )
 
 select product_id,
-price,
+price_product,
 name_product,
 INVENTORY
 from stg_users
