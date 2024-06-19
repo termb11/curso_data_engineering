@@ -1,9 +1,3 @@
-{{ config(
-    materialized='incremental',
-    unique_key = 'address_id'
-    ) 
-    }}
-
 WITH src_addresses AS (
     SELECT * 
     FROM {{ ref('base_sql_server_addresses') }}
@@ -22,8 +16,3 @@ renamed_casted AS (
 
 SELECT * FROM renamed_casted
 
-{% if is_incremental() %}
-
-  where _fivetran_synced > (select max(_fivetran_synced_utc) from {{ this }})
-
-{% endif %}

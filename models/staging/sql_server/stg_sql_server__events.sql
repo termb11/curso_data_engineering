@@ -1,9 +1,3 @@
-{{ config(
-    materialized='incremental',
-    unique_key = 'event_id'
-    ) 
-    }}
-
 WITH src_events AS (
     SELECT *
     FROM {{ ref('base_sql_server_events') }}
@@ -12,11 +6,13 @@ WITH src_events AS (
 renamed_casted AS (
     SELECT event_id,
            page_url,
+           event_type,
            event_type_id,
            user_id,
            NULLIF(product_id,'') as product_id,
            session_id,
            CONVERT_TIMEZONE('UTC',created_at)::date as created_at,
+           CONVERT_TIMEZONE('UTC',created_at)::time as created_at_utc,
            NULLIF(order_id, '') as order_id,
            coalesce(nullif(_fivetran_deleted, ''), false) as _fivetran_deleted,
            CONVERT_TIMEZONE('UTC',_fivetran_synced) AS _fivetran_synced_utc
@@ -24,9 +20,3 @@ renamed_casted AS (
     )
 
 SELECT * FROM renamed_casted
-
-{% if is_incremental() %}
-
-  where _fivetran_synced > (select max(_fivetran_synced_utc) from {{ this }})
-
-{% endif %}

@@ -1,33 +1,67 @@
 version: 2
 
 models:
-
   - name: int_orders
-    description: "Intermediate for join orders and order_items"
+    description: "Intermediate model for joining orders and order_items"
     columns:
       - name: DELIVERED_AT
+        description: "The timestamp when the order was delivered"
       - name: ESTIMATED_DELIVERY_AT
+        description: "The estimated delivery timestamp for the order"
       - name: DELIVERY_DETAILS
+        description: "Details about the delivery of the order"
       - name: DELIVERY_DETAILS_ID
+        description: "Unique identifier for the delivery details"
+        tests:
+          - not_null
       - name: ADDRESS_ID
+        description: "Identifier for the address where the order is delivered"
+        tests:
+          - not_null
       - name: QUANTITY
+        description: "Quantity of items in the order"
+        tests:
+          - not_null
       - name: PRODUCT_ID
+        description: "Identifier for the product in the order"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('products')
+              field: product_id
       - name: CATEGORY_ID
+        description: "Identifier for the category of the product"
+        tests:
+          - not_null
       - name: ITEM_PER_ORDER
+        description: "Number of items per order"
       - name: PRICE_PRODUCT
+        description: "Price of the product"
       - name: SHIPPING_PER_ITEM
+        description: "Shipping cost per item"
       - name: PRICE_PER_QUANTITY
+        description: "Total price per quantity of items"
       - name: PRICE_PER_ORDER
+        description: "Total price for the order"
       - name: DISCOUNT_PER_ITEM
+        description: "Discount applied per item"
       - name: PROMO_ID
+        description: "Identifier for the promotion applied"
       - name: TOTAL_PER_PRODUCT_PER_ORDER
+        description: "Total amount per product for the order"
 
   - name: int_budget
-    description: "Intermediate for compare budget and real sales"
+    description: "Intermediate model for comparing budget and real sales"
     columns:
       - name: PRODUCT_ID
+        description: "Identifier for the product"
       - name: MONTH
+        description: "Month of the year"
       - name: EXPECTED_QUANTITY_SOLD
+        description: "Expected quantity of the product to be sold"
       - name: REAL_QUANTITY_SOLD
+        description: "Actual quantity of the product sold"
       - name: MORE_PRODUCT_SOLD
+        description: "Indicator if more products were sold than expected"
       - name: LESS_PRODUCT_SOLD
+        description: "Indicator if fewer products were sold than expected"

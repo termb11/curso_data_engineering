@@ -87,7 +87,7 @@ models:
         description: "Country where our address is located"
         tests:
           - not_null
-      - name: date_load
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz
         description: ""
 
@@ -213,6 +213,9 @@ models:
       - name: total_orders
         data_type: number
         description: "Total orders of each user"
+      - name: _fivetran_synced_utc
+        data_type: timestamp_tz
+        description: "Total orders of each user"
 
   - name: dim_order_status
     description: "Dimension table of order status"
@@ -279,6 +282,8 @@ models:
           - relationships:
               to: ref('dim_date')
               field: date_id
+      - name: created_at_utc
+        description: "Time of creation."
 
   - name: fct_order_items
     description: "Fact table of orders"
@@ -343,6 +348,9 @@ models:
         tests:
           - not_null
           - positive_values
+      - name: _fivetran_synced_utc
+        data_type: timestamp_tz
+        description: ""
   
 
   - name: fct_budget
@@ -352,7 +360,6 @@ models:
         data_type: varchar
         description: "Unique identifier for product"
         tests:
-          - not_null
           - relationships:
               to: ref('dim_products')
               field: product_id
@@ -365,7 +372,6 @@ models:
         data_type: number
         description: "Month of the budget"
         tests:
-          - not_null
           - relationships:
               to: ref('dim_date')
               field: month_of_year

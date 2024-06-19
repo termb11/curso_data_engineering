@@ -67,6 +67,8 @@ models:
         data_type: TIMESTAMP_TZ
         tests:
           - not_null
+      - name: created_at_utc
+        description: "Time of creation."
       - name: order_id
         description: "ID for each order on platform."
         data_type: text
@@ -352,6 +354,8 @@ models:
       - name: event_type
         tests:
           - not_null
+          - allowed_values:
+              values: ['checkout', 'package_shipped', 'add_to_cart', 'page_view']
 
   - name: stg_sql_server__order_status
     description: "Table containing status of the orders."
@@ -366,6 +370,8 @@ models:
         description: "Status of the order"
         tests:
           - not_null
+          - allowed_values:
+              values: ['delivered', 'preparing', 'shipped']
 
   - name: stg_sql_server__promos_status
     description: "Table containing status of the promos."
@@ -380,6 +386,8 @@ models:
         description: "If the promo status is active or inactive"
         tests:
           - not_null
+          - allowed_values:
+              values: ['active', 'inactive']
 
   - name: stg_sql_server__shipping
     description: "Table containing shipping services."
