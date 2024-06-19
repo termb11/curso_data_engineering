@@ -58,7 +58,12 @@ SELECT
         sum(oi.quantity*p.price_product)over(partition by oi.order_id) as price_per_order,
         prom.discount_usd/soi.item_per_order as discount_per_item,
         prom.promo_id,
-        (oi.quantity*p.price_product)-(prom.discount_usd/soi.item_per_order)+(o.shipping_cost_usd/soi.item_per_order) as total_per_product_per_order
+        (oi.quantity*p.price_product)-(prom.discount_usd/soi.item_per_order)+(o.shipping_cost_usd/soi.item_per_order) as total_per_product_per_order,
+        o.order_cost_usd,
+        o.shipping_cost_usd,
+        o.order_total_usd,
+        o._fivetran_synced_UTC
+
 FROM 
     order_items oi
 LEFT JOIN 
@@ -69,7 +74,4 @@ LEFT JOIN
     orders o ON o.order_id = oi.order_id
 LEFT JOIN 
     promos prom ON prom.promo_id = o.promo_id
-
-
-
 
